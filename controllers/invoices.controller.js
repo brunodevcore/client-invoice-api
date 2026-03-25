@@ -1,62 +1,32 @@
-const invoices = require('../data/invoices')
-const clients = require('../data/clients')
+const invoicesService = require('../services/invoices.service')
 
-const getInvoices = (req, res) => {
-  const enrichedInvoices = invoices.map((invoice) => {
-    const client = clients.find((client) => client.id === invoice.clientId)
-
-    return {
-      ...invoice,
-      clientName: client ? client.name : 'Unknown client',
-    }
-  })
-
-  res.json(enrichedInvoices)
+const getInvoices = async (req, res) => {
+  const invoices = await invoicesService.getAllInvoices()
+  res.json(invoices)
 }
 
-const createInvoice = (req, res) => {
-  const { clientId, amount } = req.body
+const createInvoice = async (req, res) => {
+  const result = await invoicesService.createInvoice(req.body)
 
-  if (!clientId || !amount) {
-    return res.status(400).json({
-      error: 'clientId and amount are required',
+  if (result.error) {
+    return res.status(result.status).json({
+      error: result.error,
     })
   }
 
-  const clientExists = clients.some((client) => client.id === clientId)
-
-  if (!clientExists) {
-    return res.status(404).json({
-      error: 'Client not found',
-    })
-  }
-
-  const newInvoice = {
-    id: invoices.length + 1,
-    clientId,
-    amount,
-    status: 'pending',
-  }
-
-  invoices.push(newInvoice)
-
-  res.status(201).json(newInvoice)
+  res.status(result.status).json(result.data)
 }
 
-const payInvoice = (req, res) => {
-  const invoiceId = Number(req.params.id)
+const payInvoice = async (req, res) => {
+  const result = await invoicesService.payInvoice(req.params.id)
 
-  const invoice = invoices.find((item) => item.id === invoiceId)
-
-  if (!invoice) {
-    return res.status(404).json({
-      error: 'Invoice not found',
+  if (result.error) {
+    return res.status(result.status).json({
+      error: result.error,
     })
   }
 
-  invoice.status = 'paid'
-
-  res.json(invoice)
+  res.status(result.status).json(result.data)
 }
 
 module.exports = {

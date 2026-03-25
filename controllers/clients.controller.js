@@ -1,27 +1,20 @@
-const clients = require('../data/clients')
+const clientsService = require('../services/clients.service')
 
-const getClients = (req, res) => {
+const getClients = async (req, res) => {
+  const clients = await clientsService.getAllClients()
   res.json(clients)
 }
 
-const createClient = (req, res) => {
-  const { name, email } = req.body
+const createClient = async (req, res) => {
+  const result = await clientsService.createClient(req.body)
 
-  if (!name || !email) {
-    return res.status(400).json({
-      error: 'Name and email are required',
+  if (result.error) {
+    return res.status(result.status).json({
+      error: result.error,
     })
   }
 
-  const newClient = {
-    id: clients.length + 1,
-    name,
-    email,
-  }
-
-  clients.push(newClient)
-
-  res.status(201).json(newClient)
+  res.status(result.status).json(result.data)
 }
 
 module.exports = {
