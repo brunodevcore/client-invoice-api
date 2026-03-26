@@ -1,30 +1,49 @@
-const clients = require('../data/clients')
+const clientsService = require('../services/clients.service')
 
-const getClients = (req, res) => {
+const getClients = async (req, res) => {
+  const clients = await clientsService.getAllClients(req.user.id)
   res.json(clients)
 }
 
-const createClient = (req, res) => {
-  const { name, email } = req.body
+const createClient = async (req, res) => {
+  const result = await clientsService.createClient(req.user.id, req.body)
 
-  if (!name || !email) {
-    return res.status(400).json({
-      error: 'Name and email are required',
+  if (result.error) {
+    return res.status(result.status).json({
+      error: result.error,
     })
   }
 
-  const newClient = {
-    id: clients.length + 1,
-    name,
-    email,
+  res.status(result.status).json(result.data)
+}
+
+const updateClient = async (req, res) => {
+  const result = await clientsService.updateClient(req.user.id, req.params.id, req.body)
+
+  if (result.error) {
+    return res.status(result.status).json({
+      error: result.error,
+    })
   }
 
-  clients.push(newClient)
+  res.status(result.status).json(result.data)
+}
 
-  res.status(201).json(newClient)
+const deleteClient = async (req, res) => {
+  const result = await clientsService.deleteClient(req.user.id, req.params.id)
+
+  if (result.error) {
+    return res.status(result.status).json({
+      error: result.error,
+    })
+  }
+
+  res.status(result.status).json(result.data)
 }
 
 module.exports = {
   getClients,
   createClient,
+  updateClient,
+  deleteClient,
 }
