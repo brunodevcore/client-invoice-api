@@ -1,8 +1,8 @@
 const Invoice = require('../models/invoice.model')
 const Client = require('../models/client.model')
 
-const getAllInvoices = async () => {
-  const invoices = await Invoice.find()
+const getAllInvoices = async (userId) => {
+  const invoices = await Invoice.find({ userId })
     .populate('clientId', 'name email')
     .sort({ createdAt: -1 })
 
@@ -20,8 +20,8 @@ const getAllInvoices = async () => {
   return enrichedInvoices
 }
 
-const createInvoice = async ({ clientId, amount }) => {
-  const clientExists = await Client.findById(clientId)
+const createInvoice = async (userId, { clientId, amount }) => {
+  const clientExists = await Client.findOne({ _id: clientId, userId })
 
   if (!clientExists) {
     return {
@@ -31,6 +31,7 @@ const createInvoice = async ({ clientId, amount }) => {
   }
 
   const newInvoice = await Invoice.create({
+    userId,
     clientId,
     amount,
     status: 'pending',
@@ -42,8 +43,8 @@ const createInvoice = async ({ clientId, amount }) => {
   }
 }
 
-const payInvoice = async (id) => {
-  const invoice = await Invoice.findById(id)
+const payInvoice = async (userId, id) => {
+  const invoice = await Invoice.findOne({ _id: id, userId })
 
   if (!invoice) {
     return {

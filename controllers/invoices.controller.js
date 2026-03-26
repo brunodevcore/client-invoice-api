@@ -1,12 +1,12 @@
 const invoicesService = require('../services/invoices.service')
 
 const getInvoices = async (req, res) => {
-  const invoices = await invoicesService.getAllInvoices()
+  const invoices = await invoicesService.getAllInvoices(req.user.id)
   res.json(invoices)
 }
 
 const createInvoice = async (req, res) => {
-  const result = await invoicesService.createInvoice(req.body)
+  const result = await invoicesService.createInvoice(req.user.id, req.body)
 
   if (result.error) {
     return res.status(result.status).json({
@@ -18,7 +18,7 @@ const createInvoice = async (req, res) => {
 }
 
 const payInvoice = async (req, res) => {
-  const result = await invoicesService.payInvoice(req.params.id)
+  const result = await invoicesService.payInvoice(req.user.id, req.params.id)
 
   if (result.error) {
     return res.status(result.status).json({

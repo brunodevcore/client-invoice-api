@@ -1,15 +1,10 @@
 const express = require('express')
-const {
-  getInvoices,
-  createInvoice,
-  payInvoice,
-} = require('../controllers/invoices.controller')
-const { validateInvoice } = require('../middlewares/validation.middleware')
-
 const router = express.Router()
+const invoicesController = require('../controllers/invoices.controller')
+const authMiddleware = require('../middlewares/auth.middleware')
 
-router.get('/', getInvoices)
-router.post('/', validateInvoice, createInvoice)
-router.put('/:id/pay', payInvoice)
+router.get('/', authMiddleware, invoicesController.getInvoices)
+router.post('/', authMiddleware, invoicesController.createInvoice)
+router.put('/:id/pay', authMiddleware, invoicesController.payInvoice)
 
 module.exports = router
