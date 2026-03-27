@@ -1,109 +1,68 @@
-# Client & Invoice API
+# InvoiceFlow Frontend
 
-REST API built to manage clients and invoices, designed as a foundation for administrative tools or internal business systems.
+InvoiceFlow is a full-stack web application designed to manage clients and invoices in a clean, minimal and professional interface.
 
-## Features
+This frontend was built with React and Vite, and connects to a production backend built with Node.js, Express and MongoDB.
 
-- Get clients
-- Create clients
-- Get invoices
-- Create invoices
-- Mark invoices as paid
-- Link invoices with clients
-- Enrich invoices with client data
+### Live Demo
+- Frontend: https:automation-dashboard-9f3hvf59y-brunodevcores-projects.vercel.app
+- Backend API: https://invoiceflow-backend-c7q6.onrender.com
 
-## Endpoints
+### Features
+- User registration and login
+- JWT-based authenticated session
+- Protected routes
+- Client creation, editing and deletion
+- Invoice creation and payment status updates
+- Dashboard with real business metrics
+- Minimal and polished user interface
 
-### Clients
-- `GET /clients`
-- `POST /clients`
+### Tech Stack
+- React
+- Vite
+- React Router
+- Axios
+- Tailwind CSS
 
-### Invoices
-- `GET /invoices`
-- `POST /invoices`
-- `PUT /invoices/:id/pay`
+### Backend
+This frontend connects to the InvoiceFlow backend API:
+- https://invoiceflow-backend-c7q6.onrender.com
 
-## Technologies
+### Local Development
+bash 
+npm install
+npm run dev
 
-- Node.js
-- Express
-- JavaScript
+--------------------------------------------------------------------------------------------------------------------------------------------
 
-## Project Structure
+InvoiceFlow es una aplicación web full stack diseñada para gestionar clientes y facturas con una interfaz limpia, minimalista y profesional.
 
-- `routes/` → route definitions
-- `controllers/` → business logic
-- `data/` → in-memory data storage
+Este frontend fue desarrollado con React y Vite, y se conecta a un backend en producción construido con Node.js, Express y MongoDB.
 
-## Purpose
+### Demo en vivo
+Frontend: https:automation-dashboard-9f3hvf59y-brunodevcores-projects.vercel.app
+Backend API: https://invoiceflow-backend-c7q6.onrender.com
+Funcionalidades
+Registro e inicio de sesión
+Sesión autenticada con JWT
+Rutas protegidas
+Creación, edición y eliminación de clientes
+Creación de facturas y actualización de estado de pago
+Dashboard con métricas reales de negocio
+Interfaz minimalista y cuidada
 
-This project was built as a portfolio piece to demonstrate:
+### Stack tecnológico
+React
+Vite
+React Router
+Axios
+Tailwind CSS
 
-- REST API development
-- backend architecture
-- data relationships
-- business logic implementation
-- structured code organization
+### Backend
+Este frontend se conecta a la API backend de InvoiceFlow:
+https://invoiceflow-backend-c7q6.onrender.com
 
-## Future Improvements
-
-- database integration
-- authentication
-- pagination and filtering
-- frontend integration
-
------------------------------------------------------------------------------------------------------------------------------------------------
-
-# Client & Invoice API
-
-API desarrollada para gestionar clientes y facturas, pensada como base para herramientas internas administrativas o sistemas de facturación simples.
-
-## Funcionalidades
-
-- Obtener clientes
-- Crear clientes
-- Obtener facturas
-- Crear facturas
-- Marcar facturas como pagadas
-- Relacionar facturas con clientes
-- Enriquecer respuestas con nombre del cliente
-
-## Endpoints
-
-### Clientes
-- `GET /clients`
-- `POST /clients`
-
-### Facturas
-- `GET /invoices`
-- `POST /invoices`
-- `PUT /invoices/:id/pay`
-
-## Tecnologías utilizadas
-
-- Node.js
-- Express
-- JavaScript
-
-## Estructura del proyecto
-
-- `routes/` → definición de rutas
-- `controllers/` → lógica de negocio
-- `data/` → datos simulados en memoria
-
-## Objetivo
-
-Este proyecto fue desarrollado como pieza de portfolio para demostrar:
-
-- construcción de APIs REST
-- organización backend por capas
-- manejo de relaciones entre entidades
-- validaciones básicas
-- lógica de negocio orientada a sistemas administrativos
-
-## Mejoras futuras
-
-- persistencia en base de datos
-- autenticación
-- paginación y filtros
-- integración con frontend
+### Desarrollo local
+bash
+npm install
+npm run dev
